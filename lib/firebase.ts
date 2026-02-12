@@ -24,11 +24,16 @@ googleProvider.setCustomParameters({
 
 const ALLOWED_EMAILS =
   process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(",")
-    .map((email) => email.trim().toLowerCase())
+    .map((email) =>
+      email
+        .trim()
+        .toLowerCase()
+        .replace(/^['"]|['"]$/g, ""),
+    )
     .filter(Boolean) || [];
 
-export function isEmailAllowed(_email: string): boolean {
-  return true;
+export function isEmailAllowed(email: string): boolean {
+  return ALLOWED_EMAILS.includes(email.trim().toLowerCase());
 }
 
 export { app };
